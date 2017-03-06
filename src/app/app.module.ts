@@ -2,29 +2,60 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { LoginPage } from '../pages/login/login';
+import { UsersPage } from '../pages/users/users';
+import { ChatsPage } from '../pages/chats/chats';
+import { AccountPage } from '../pages/account/account';
+import { ChatViewPage } from '../pages/chat-view/chat-view';
 
+import { Storage } from '@ionic/storage';
+import { AngularFireModule } from 'angularfire2';
+
+import { AuthProvider } from '../providers/auth-provider';
+import { ChatsProvider } from '../providers/chats-provider';
+import { UserProvider } from '../providers/user-provider';
+import { UtilProvider } from '../providers/utils';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyDKZFIYNhqKgtSgEzR_vywOkpLJl2acBqU",
+  authDomain: "whatsapp-f5039.firebaseapp.com",
+  databaseURL: "https://whatsapp-f5039.firebaseio.com",
+  storageBucket: "whatsapp-f5039.appspot.com",
+  messagingSenderId: "1030174625312"
+};
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    LoginPage,
+    UsersPage,
+    ChatsPage,
+    AccountPage,
+    ChatViewPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    LoginPage,
+    UsersPage,
+    ChatsPage,
+    AccountPage,
+    ChatViewPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
+  Storage,
+  AuthProvider, ChatsProvider, UserProvider, UtilProvider
+  ]
 })
-export class AppModule {}
+export class AppModule { }
