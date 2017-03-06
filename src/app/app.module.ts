@@ -11,7 +11,7 @@ import { AccountPage } from '../pages/account/account';
 import { ChatViewPage } from '../pages/chat-view/chat-view';
 
 import { Storage } from '@ionic/storage';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { AuthProvider } from '../providers/auth-provider';
 import { ChatsProvider } from '../providers/chats-provider';
@@ -25,6 +25,10 @@ export const firebaseConfig = {
   storageBucket: "whatsapp-f5039.appspot.com",
   messagingSenderId: "1030174625312"
 };
+const myFirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+}
 @NgModule({
   declarations: [
     MyApp,
@@ -39,7 +43,7 @@ export const firebaseConfig = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,22 +1,28 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { UserProvider } from '../../providers/user-provider';
+import { ChatViewPage } from '../chat-view/chat-view';
 
-/*
-  Generated class for the Users page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-users',
   templateUrl: 'users.html'
 })
 export class UsersPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UsersPage');
-  }
+    users:Observable<any[]>;
+    uid:string;
+    constructor(public nav: NavController, public userProvider: UserProvider) {
+      this.userProvider.getUid()
+        .then(uid => {
+            this.uid = uid;
+            this.users = this.userProvider.getAllUsers();
+        });
+    }
+    
+    openChat(key) {
+        let param = {uid: this.uid, interlocutor: key};
+        this.nav.push(ChatViewPage,param);
+    }
 
 }
